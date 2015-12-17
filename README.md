@@ -1,5 +1,5 @@
 sf-farm-manager extension provides a simple solution for executing the same
-command on all server in a farm, or only on servers of given type (virtual,
+command on all servers in a farm, or only on servers of given type (virtual,
 physical, OpenVZ hosts, in future also LXC/Docker hosts).
 
 add-managed-host.sh script performs automatic analysis of given host and
