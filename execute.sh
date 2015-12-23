@@ -8,15 +8,16 @@ VZ=0
 LXC=0
 DCK=0
 WKS=0
+EC2=0
 DEF=1
 command=$@
 
 if [ "$1" = "" ]; then
-	echo "usage: $0 [-ph] [-vm] [-vz] [-lxc] [-dck] [-wks] command argument(s)"
+	echo "usage: $0 [-ph] [-vm] [-vz] [-lxc] [-dck] [-wks] [-ec2] command argument(s)"
 	exit 1
 fi
 
-while [ "$1" = "-ph" ] || [ "$1" = "-vm" ] || [ "$1" = "-vz" ] || [ "$1" = "-lxc" ] || [ "$1" = "-dck" ] || [ "$1" = "-wks" ]; do
+while [ "$1" = "-ph" ] || [ "$1" = "-vm" ] || [ "$1" = "-vz" ] || [ "$1" = "-lxc" ] || [ "$1" = "-dck" ] || [ "$1" = "-wks" ] || [ "$1" = "-ec2" ]; do
 	DEF=0
 	if   [ "$1" = "-ph" ]; then PH=1
 	elif [ "$1" = "-vm" ]; then VM=1
@@ -24,6 +25,7 @@ while [ "$1" = "-ph" ] || [ "$1" = "-vm" ] || [ "$1" = "-vz" ] || [ "$1" = "-lxc
 	elif [ "$1" = "-lxc" ]; then LXC=1
 	elif [ "$1" = "-dck" ]; then DCK=1
 	elif [ "$1" = "-wks" ]; then WKS=1
+	elif [ "$1" = "-ec2" ]; then EC2=1
 	fi
 	shift
 	command=$@
@@ -44,6 +46,7 @@ connect_loop() {
 	done
 }
 
+if [ $EC2 = 1 ]; then connect_loop "$command" ec2.hosts "Amazon EC2 instance"; fi
 if [ $WKS = 1 ]; then connect_loop "$command" workstation.hosts "workstation"; fi
 if [ $PH = 1 ]; then connect_loop "$command" physical.hosts "physical server"; fi
 if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi

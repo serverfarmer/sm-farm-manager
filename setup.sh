@@ -4,7 +4,7 @@
 
 
 path="/etc/local/.config"
-files="$path/backup.hosts $path/workstation.hosts $path/physical.hosts $path/virtual.hosts $path/openvz.hosts"
+files="$path/backup.hosts $path/workstation.hosts $path/physical.hosts $path/virtual.hosts $path/openvz.hosts $path/ec2.hosts"
 
 for db in $files; do
 	touch $db
