@@ -1,5 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/init
 . /opt/farm/scripts/functions.custom
 
 PH=0
