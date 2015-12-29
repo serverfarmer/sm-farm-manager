@@ -6,6 +6,7 @@ VM=0
 VZ=0
 LXC=0
 DCK=0
+XEN=0
 WKS=0
 EC2=0
 PRB=0
@@ -17,13 +18,14 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-while [ "$1" = "-ph" ] || [ "$1" = "-vm" ] || [ "$1" = "-vz" ] || [ "$1" = "-lxc" ] || [ "$1" = "-dck" ] || [ "$1" = "-wks" ] || [ "$1" = "-ec2" ] || [ "$1" = "-prb" ]; do
+while [ "$1" = "-ph" ] || [ "$1" = "-vm" ] || [ "$1" = "-vz" ] || [ "$1" = "-lxc" ] || [ "$1" = "-dck" ] || [ "$1" = "-xen" ] || [ "$1" = "-wks" ] || [ "$1" = "-ec2" ] || [ "$1" = "-prb" ]; do
 	DEF=0
 	if   [ "$1" = "-ph" ]; then PH=1
 	elif [ "$1" = "-vm" ]; then VM=1
 	elif [ "$1" = "-vz" ]; then VZ=1
 	elif [ "$1" = "-lxc" ]; then LXC=1
 	elif [ "$1" = "-dck" ]; then DCK=1
+	elif [ "$1" = "-xen" ]; then XEN=1
 	elif [ "$1" = "-wks" ]; then WKS=1
 	elif [ "$1" = "-ec2" ]; then EC2=1
 	elif [ "$1" = "-prb" ]; then PRB=1
@@ -67,5 +69,6 @@ if [ $VZ = 1 ]; then
     done
 fi
 
+if [ $XEN = 1 ]; then echo "skipping Xen containers; not implemented yet"; fi
 if [ $LXC = 1 ]; then echo "skipping LXC containers; not implemented yet"; fi
 if [ $DCK = 1 ]; then echo "skipping Docker containers; not implemented yet"; fi
