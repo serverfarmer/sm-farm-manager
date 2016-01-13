@@ -42,10 +42,19 @@ fi
 
 connect_loop() {
 	for server in `cat /etc/local/.config/$2`; do
-		sshkey="`ssh_management_key_storage_filename $server`"
+
+		if [ -z "${server##*:*}" ]; then
+			host="${server%:*}"
+			port="${server##*:}"
+		else
+			host=$server
+			port=22
+		fi
+
+		sshkey="`ssh_management_key_storage_filename $host`"
 		echo
 		echo "####### executing \"$1\" on $3 $server"
-		ssh -t -i $sshkey -o StrictHostKeyChecking=no root@$server "$1"
+		ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host "$1"
 	done
 }
 
@@ -56,17 +65,26 @@ if [ $PH = 1 ]; then connect_loop "$command" physical.hosts "physical server"; f
 if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi
 
 if [ $VZ = 1 ]; then
-    for server in `cat /etc/local/.config/openvz.hosts`; do
-        sshkey="`ssh_management_key_storage_filename $server`"
-        containers="`ssh -i $sshkey root@$server \"/usr/sbin/vzlist -Ho ctid\"`"
+	for server in `cat /etc/local/.config/openvz.hosts`; do
 
-        for ID in $containers; do
-            cthost="`ssh -i $sshkey root@$server \"/usr/sbin/vzlist -Ho hostname $ID\"`"
-            echo
-            echo "####### executing \"$command\" on container $ID [$cthost] at server $server"
-            ssh -t -i $sshkey root@$server "/usr/sbin/vzctl exec $ID \"TERM=vt100 $command\""
-        done
-    done
+		if [ -z "${server##*:*}" ]; then
+			host="${server%:*}"
+			port="${server##*:}"
+		else
+			host=$server
+			port=22
+		fi
+
+		sshkey="`ssh_management_key_storage_filename $host`"
+		containers="`ssh -i $sshkey -p $port root@$host \"/usr/sbin/vzlist -Ho ctid\"`"
+
+		for ID in $containers; do
+			cthost="`ssh -i $sshkey -p $port root@$host \"/usr/sbin/vzlist -Ho hostname $ID\"`"
+			echo
+			echo "####### executing \"$command\" on container $ID [$cthost] at server $server"
+			ssh -t -i $sshkey -p $port root@$host "/usr/sbin/vzctl exec $ID \"TERM=vt100 $command\""
+		done
+	done
 fi
 
 if [ $XEN = 1 ]; then echo "skipping Xen containers; not implemented yet"; fi
