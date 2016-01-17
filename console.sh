@@ -10,7 +10,7 @@ path="/etc/local/.config"
 query=$1
 
 if [ "`getent hosts \"$query\"`" != "" ]; then
-	query="$query[.]"
+	query="^$query[.]"
 fi
 
 # TODO: sort by the longest match, instead of the longest entry
