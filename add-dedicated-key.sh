@@ -4,7 +4,7 @@
 path="/etc/local/.ssh"
 
 if [ "$1" = "" ]; then
-	echo "usage: $0 <hostname[:port]> [username]"
+	echo "usage: $0 <hostname[:port]> [username] [key-passphrase]"
 	exit 1
 elif ! [[ $1 =~ ^[a-z0-9.-]+[.][a-z0-9]+([:][0-9]+)?$ ]]; then
 	echo "error: parameter 1 not conforming hostname format"
@@ -47,7 +47,7 @@ if [[ "$entry" = "" ]]; then
 	exit 1
 fi
 
-ssh-keygen -f $newkey -C $user@$host -N ""
+ssh-keygen -f $newkey -C $user@$host -N "$3"
 pubkey=`cat $newkey.pub`
 home=`echo "$entry" |cut -d: -f 6`
 
