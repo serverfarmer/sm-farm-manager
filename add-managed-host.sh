@@ -40,6 +40,8 @@ if [ -x /opt/sf-backup-collector/add-backup-host.sh ]; then
 	/opt/sf-backup-collector/add-backup-host.sh $server
 fi
 
+/opt/sf-farm-manager/add-dedicated-key.sh $server $root
+
 hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardware-type.sh`
 openvz=`ssh -i $sshkey -p $port root@$host "cat /proc/vz/version 2>/dev/null"`
 netmgr=`ssh -i $sshkey -p $port root@$host "ls /etc/NetworkManager 2>/dev/null"`

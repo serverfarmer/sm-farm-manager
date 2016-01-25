@@ -8,13 +8,18 @@ fi
 
 path="/etc/local/.config"
 query=$1
+shift
 
-if [ "`getent hosts \"$query\"`" != "" ]; then
-	query="^$query[.]"
+server=`grep -h "^$query$" $path/physical.hosts $path/virtual.hosts $path/ec2.hosts $path/workstation.hosts $path/problematic.hosts |head -1`
+if [ "$server" = "" ]; then
+
+	if [ "`getent hosts \"$query\"`" != "" ]; then
+		query="^$query[.:]"
+	fi
+
+	# TODO: sort by the longest match, instead of the longest entry
+	server=`grep -h "$query" $path/physical.hosts $path/virtual.hosts $path/ec2.hosts $path/workstation.hosts $path/problematic.hosts |awk '{ print length($0) " " $0; }' |sort -rn |cut -d ' ' -f 2- |head -1`
 fi
-
-# TODO: sort by the longest match, instead of the longest entry
-server=`grep -h "$query" $path/physical.hosts $path/virtual.hosts $path/ec2.hosts $path/workstation.hosts $path/problematic.hosts |awk '{ print length($0) " " $0; }' |sort -rn |cut -d ' ' -f 2- |head -1`
 
 if [ "$server" = "" ]; then
 	echo "error: no such server"
@@ -30,4 +35,4 @@ else
 fi
 
 sshkey="`ssh_management_key_storage_filename $host`"
-ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host
+ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
