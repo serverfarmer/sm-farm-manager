@@ -7,6 +7,7 @@ if [ "$1" = "" ]; then
 fi
 
 path="/etc/local/.config"
+orig=$1
 query=$1
 shift
 
@@ -22,8 +23,7 @@ if [ "$server" = "" ]; then
 fi
 
 if [ "$server" = "" ]; then
-	echo "error: no such server"
-	exit 1
+	server=$orig
 fi
 
 if [ -z "${server##*:*}" ]; then
