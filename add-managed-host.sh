@@ -36,11 +36,11 @@ if [[ $? != 0 ]]; then
 	exit 1
 fi
 
-/opt/sf-farm-manager/add-dedicated-key.sh $server root
-/opt/sf-farm-manager/add-dedicated-key.sh $server backup
+/opt/farm/ext/farm-manager/add-dedicated-key.sh $server root
+/opt/farm/ext/farm-manager/add-dedicated-key.sh $server backup
 
-if [ -x /opt/sf-backup-collector/add-backup-host.sh ]; then
-	/opt/sf-backup-collector/add-backup-host.sh $server
+if [ -x /opt/farm/ext/backup-collector/add-backup-host.sh ]; then
+	/opt/farm/ext/backup-collector/add-backup-host.sh $server
 fi
 
 hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardware-type.sh`

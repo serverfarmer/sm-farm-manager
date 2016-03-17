@@ -89,7 +89,7 @@ chown -R imap-$1:imapusers $path
 rkey=`ssh_management_key_storage_filename $rhost`
 rsync -e "ssh -i $rkey -p $rport" -av $path root@$rhost:/srv/imap
 ssh -i $rkey -p $rport root@$rhost "useradd -u $uid -d $path -M -g imapusers -G www-data -s /bin/false imap-$1"
-ssh -i $rkey -p $rport root@$rhost "echo \"# */5 * * * * imap-$1 /opt/sf-imap-server/cron/fetchmail.sh imap-$1 $1\" >>/etc/crontab"
+ssh -i $rkey -p $rport root@$rhost "echo \"# */5 * * * * imap-$1 /opt/farm/ext/imap-server/cron/fetchmail.sh imap-$1 $1\" >>/etc/crontab"
 ssh -i $rkey -p $rport root@$rhost "passwd imap-$1"
 
 if [ "$3" != "" ] && [ "$3" != "$2" ]; then
