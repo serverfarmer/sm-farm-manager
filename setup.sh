@@ -17,3 +17,4 @@ ln -sf /opt/farm/ext/farm-manager/add-rsync-user.sh /usr/local/bin/add-rsync-use
 ln -sf /opt/farm/ext/farm-manager/add-imap-user.sh /usr/local/bin/add-imap-user
 ln -sf /opt/farm/ext/farm-manager/execute.sh /usr/local/bin/sf-execute
 ln -sf /opt/farm/ext/farm-manager/console.sh /usr/local/bin/sf-console
+ln -sf /opt/farm/ext/farm-manager/run.sh /usr/local/bin/sf-run

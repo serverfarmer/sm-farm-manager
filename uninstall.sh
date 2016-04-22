@@ -27,3 +27,7 @@ fi
 if [ -h /usr/local/bin/sf-console ]; then
 	rm -f /usr/local/bin/sf-console
 fi
+
+if [ -h /usr/local/bin/sf-run ]; then
+	rm -f /usr/local/bin/sf-run
+fi
