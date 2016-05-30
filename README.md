@@ -9,5 +9,3 @@ sf-farm-manager extension provides several management scripts, allowing:
   name or non-standard ssh port
 - creating dedicated ssh keys for given user@host and automatically installing
   such keys
-- creating IMAP, Samba and rsync accounts (for use with sf-imap-server,
-  sf-rsync-server and sf-samba-server extensions)

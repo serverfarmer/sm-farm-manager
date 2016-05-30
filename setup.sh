@@ -12,9 +12,6 @@ mkdir -p /srv/imap /srv/rsync
 
 ln -sf /opt/farm/ext/farm-manager/add-dedicated-key.sh /usr/local/bin/add-dedicated-key
 ln -sf /opt/farm/ext/farm-manager/add-managed-host.sh /usr/local/bin/add-managed-host
-ln -sf /opt/farm/ext/farm-manager/add-samba-user.sh /usr/local/bin/add-samba-user
-ln -sf /opt/farm/ext/farm-manager/add-rsync-user.sh /usr/local/bin/add-rsync-user
-ln -sf /opt/farm/ext/farm-manager/add-imap-user.sh /usr/local/bin/add-imap-user
 ln -sf /opt/farm/ext/farm-manager/execute.sh /usr/local/bin/sf-execute
 ln -sf /opt/farm/ext/farm-manager/console.sh /usr/local/bin/sf-console
 ln -sf /opt/farm/ext/farm-manager/run.sh /usr/local/bin/sf-run
