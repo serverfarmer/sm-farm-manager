@@ -6,7 +6,7 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-path="/etc/local/.config"
+path="/etc/local/.farm"
 orig=$1
 query=$1
 shift

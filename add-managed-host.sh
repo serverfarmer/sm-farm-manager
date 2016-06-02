@@ -1,7 +1,7 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
 
-path="/etc/local/.config"
+path="/etc/local/.farm"
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]>"

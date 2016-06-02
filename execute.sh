@@ -41,7 +41,7 @@ fi
 
 
 connect_loop() {
-	for server in `cat /etc/local/.config/$2`; do
+	for server in `cat /etc/local/.farm/$2`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"
@@ -65,7 +65,7 @@ if [ $PH = 1 ]; then connect_loop "$command" physical.hosts "physical server"; f
 if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi
 
 if [ $VZ = 1 ]; then
-	for server in `cat /etc/local/.config/openvz.hosts`; do
+	for server in `cat /etc/local/.farm/openvz.hosts`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"
