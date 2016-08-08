@@ -36,13 +36,6 @@ if [[ $? != 0 ]]; then
 	exit 1
 fi
 
-/opt/farm/ext/farm-manager/add-dedicated-key.sh $server root
-/opt/farm/ext/farm-manager/add-dedicated-key.sh $server backup
-
-if [ -x /opt/farm/ext/backup-collector/add-backup-host.sh ]; then
-	/opt/farm/ext/backup-collector/add-backup-host.sh $server
-fi
-
 hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardware-type.sh`
 openvz=`ssh -i $sshkey -p $port root@$host "cat /proc/vz/version 2>/dev/null"`
 netmgr=`ssh -i $sshkey -p $port root@$host "ls /etc/NetworkManager 2>/dev/null"`
@@ -53,10 +46,22 @@ elif [ $hwtype = "physical" ]; then
 	echo $server >>"$path/physical.hosts"
 elif [ $hwtype = "guest" ]; then
 	echo $server >>"$path/virtual.hosts"
+elif [ $hwtype = "lxc" ]; then
+	echo $server >>"$path/lxc.hosts"
 fi
 
 if [ "$openvz" != "" ]; then
 	echo $server >>"$path/openvz.hosts"
 fi
 
-# TODO: implement checking, if added host runs also Xen / LXC / Docker containers
+/opt/farm/ext/farm-manager/add-dedicated-key.sh $server root
+
+if [ $hwtype != "container" ] && [ $hwtype != "lxc" ]; then
+	/opt/farm/ext/farm-manager/add-dedicated-key.sh $server backup
+
+	if [ -x /opt/farm/ext/backup-collector/add-backup-host.sh ]; then
+		/opt/farm/ext/backup-collector/add-backup-host.sh $server
+	fi
+fi
+
+# TODO: implement checking, if added host runs also Xen / Docker containers

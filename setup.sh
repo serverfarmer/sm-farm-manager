@@ -1,7 +1,7 @@
 #!/bin/sh
 
 path="/etc/local/.farm"
-files="$path/backup.hosts $path/workstation.hosts $path/problematic.hosts $path/physical.hosts $path/virtual.hosts $path/openvz.hosts $path/ec2.hosts $path/mikrotik.hosts $path/cisco.hosts"
+files="$path/backup.hosts $path/workstation.hosts $path/problematic.hosts $path/physical.hosts $path/virtual.hosts $path/openvz.hosts $path/lxc.hosts $path/ec2.hosts $path/mikrotik.hosts $path/cisco.hosts"
 
 mkdir -p $path
 chmod 0700 $path

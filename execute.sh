@@ -63,6 +63,7 @@ if [ $WKS = 1 ]; then connect_loop "$command" workstation.hosts "workstation"; f
 if [ $PRB = 1 ]; then connect_loop "$command" problematic.hosts "problematic server"; fi
 if [ $PH = 1 ]; then connect_loop "$command" physical.hosts "physical server"; fi
 if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi
+if [ $LXC = 1 ]; then connect_loop "$command" lxc.hosts "LXC container"; fi
 
 if [ $VZ = 1 ]; then
 	for server in `cat /etc/local/.farm/openvz.hosts`; do
@@ -88,5 +89,4 @@ if [ $VZ = 1 ]; then
 fi
 
 if [ $XEN = 1 ]; then echo "skipping Xen containers; not implemented yet"; fi
-if [ $LXC = 1 ]; then echo "skipping LXC containers; not implemented yet"; fi
 if [ $DCK = 1 ]; then echo "skipping Docker containers; not implemented yet"; fi
