@@ -37,6 +37,7 @@ if [[ $? != 0 ]]; then
 fi
 
 hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardware-type.sh`
+docker=`ssh -i $sshkey -p $port root@$host "which docker 2>/dev/null"`
 openvz=`ssh -i $sshkey -p $port root@$host "cat /proc/vz/version 2>/dev/null"`
 netmgr=`ssh -i $sshkey -p $port root@$host "ls /etc/NetworkManager 2>/dev/null"`
 
@@ -54,6 +55,10 @@ if [ "$openvz" != "" ]; then
 	echo $server >>"$path/openvz.hosts"
 fi
 
+if [ "$docker" != "" ]; then
+	echo $server >>"$path/docker.hosts"
+fi
+
 /opt/farm/ext/farm-manager/add-dedicated-key.sh $server root
 
 if [ $hwtype != "container" ] && [ $hwtype != "lxc" ]; then
@@ -63,5 +68,3 @@ if [ $hwtype != "container" ] && [ $hwtype != "lxc" ]; then
 		/opt/farm/ext/backup-collector/add-backup-host.sh $server
 	fi
 fi
-
-# TODO: implement checking, if added host runs also Xen / Docker containers

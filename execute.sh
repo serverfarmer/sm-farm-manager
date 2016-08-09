@@ -88,5 +88,26 @@ if [ $VZ = 1 ]; then
 	done
 fi
 
+if [ $DCK = 1 ]; then
+	for server in `cat /etc/local/.farm/docker.hosts`; do
+
+		if [ -z "${server##*:*}" ]; then
+			host="${server%:*}"
+			port="${server##*:}"
+		else
+			host=$server
+			port=22
+		fi
+
+		sshkey="`ssh_management_key_storage_filename $host`"
+		containers="`ssh -i $sshkey -p $port root@$host \"docker ps -q\"`"
+
+		for ID in $containers; do
+			echo
+			echo "####### executing \"$command\" on container $ID at server $server"
+			ssh -t -i $sshkey -p $port root@$host "docker exec $ID $command"
+		done
+	done
+fi
+
 if [ $XEN = 1 ]; then echo "skipping Xen containers; not implemented yet"; fi
-if [ $DCK = 1 ]; then echo "skipping Docker containers; not implemented yet"; fi
