@@ -39,7 +39,7 @@ fi
 hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardware-type.sh`
 docker=`ssh -i $sshkey -p $port root@$host "which docker 2>/dev/null"`
 openvz=`ssh -i $sshkey -p $port root@$host "cat /proc/vz/version 2>/dev/null"`
-netmgr=`ssh -i $sshkey -p $port root@$host "ls /etc/NetworkManager 2>/dev/null"`
+netmgr=`ssh -i $sshkey -p $port root@$host "cat /etc/X11/xinit/xinitrc 2>/dev/null"`
 
 if [ "$netmgr" != "" ]; then
 	echo $server >>"$path/workstation.hosts"
