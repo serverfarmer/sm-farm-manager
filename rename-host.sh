@@ -4,6 +4,12 @@
 # zone failure, or migrating to Elastic IP).
 #
 # Tomasz Klim, Jun 2016
+#
+#
+# TODO:
+# - use /opt/farm/scripts/config/detect-hostname-type.sh script
+# - support for custom ports
+#
 
 path="/etc/local/.farm"
 remote="/srv/mounts/backup/remote"
