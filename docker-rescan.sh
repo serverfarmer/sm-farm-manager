@@ -27,6 +27,6 @@ scan_loop() {
 
 scan_loop physical.hosts
 scan_loop virtual.hosts
-scan_loop ec2.hosts
+scan_loop cloud.hosts
 scan_loop problematic.hosts
 scan_loop workstation.hosts

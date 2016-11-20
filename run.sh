@@ -16,7 +16,7 @@ script="`realpath $2`"
 shift
 shift
 
-server=`grep -h "^$query$" $path/physical.hosts $path/virtual.hosts $path/lxc.hosts $path/ec2.hosts $path/workstation.hosts $path/problematic.hosts |head -1`
+server=`grep -h "^$query$" $path/physical.hosts $path/virtual.hosts $path/lxc.hosts $path/cloud.hosts $path/workstation.hosts $path/problematic.hosts |head -1`
 if [ "$server" = "" ]; then
 
 	if [ "`getent hosts \"$query\"`" != "" ]; then
@@ -24,7 +24,7 @@ if [ "$server" = "" ]; then
 	fi
 
 	# TODO: sort by the longest match, instead of the longest entry
-	server=`grep -h "$query" $path/physical.hosts $path/virtual.hosts $path/lxc.hosts $path/ec2.hosts $path/workstation.hosts $path/problematic.hosts |awk '{ print length($0) " " $0; }' |sort -rn |cut -d ' ' -f 2- |head -1`
+	server=`grep -h "$query" $path/physical.hosts $path/virtual.hosts $path/lxc.hosts $path/cloud.hosts $path/workstation.hosts $path/problematic.hosts |awk '{ print length($0) " " $0; }' |sort -rn |cut -d ' ' -f 2- |head -1`
 fi
 
 if [ "$server" = "" ]; then
