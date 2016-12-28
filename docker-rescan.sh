@@ -5,7 +5,7 @@
 
 
 scan_loop() {
-	for server in `cat /etc/local/.farm/$1`; do
+	for server in `cat /etc/local/.farm/$1 |grep -v ^#`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"

@@ -41,7 +41,7 @@ fi
 
 
 connect_loop() {
-	for server in `cat /etc/local/.farm/$2`; do
+	for server in `cat /etc/local/.farm/$2 |grep -v ^#`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"
@@ -66,7 +66,7 @@ if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi
 if [ $LXC = 1 ]; then connect_loop "$command" lxc.hosts "LXC container"; fi
 
 if [ $VZ = 1 ]; then
-	for server in `cat /etc/local/.farm/openvz.hosts`; do
+	for server in `cat /etc/local/.farm/openvz.hosts |grep -v ^#`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"
@@ -89,7 +89,7 @@ if [ $VZ = 1 ]; then
 fi
 
 if [ $DCK = 1 ]; then
-	for server in `cat /etc/local/.farm/docker.hosts`; do
+	for server in `cat /etc/local/.farm/docker.hosts |grep -v ^#`; do
 
 		if [ -z "${server##*:*}" ]; then
 			host="${server%:*}"
