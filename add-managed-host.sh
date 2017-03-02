@@ -38,15 +38,18 @@ hwtype=`ssh -i $sshkey -p $port root@$host /opt/farm/scripts/config/detect-hardw
 docker=`ssh -i $sshkey -p $port root@$host "which docker 2>/dev/null"`
 openvz=`ssh -i $sshkey -p $port root@$host "cat /proc/vz/version 2>/dev/null"`
 netmgr=`ssh -i $sshkey -p $port root@$host "cat /etc/X11/xinit/xinitrc 2>/dev/null"`
+cloud=`ssh -i $sshkey -p $port root@$host "cat /etc/cloud/build.info 2>/dev/null"`
 
 if [ "$netmgr" != "" ]; then
 	echo $server >>"$path/workstation.hosts"
 elif [ $hwtype = "physical" ]; then
 	echo $server >>"$path/physical.hosts"
-elif [ $hwtype = "guest" ]; then
-	echo $server >>"$path/virtual.hosts"
 elif [ $hwtype = "lxc" ]; then
 	echo $server >>"$path/lxc.hosts"
+elif [ "$cloud" != "" ]; then
+	echo $server >>"$path/cloud.hosts"
+elif [ $hwtype = "guest" ]; then
+	echo $server >>"$path/virtual.hosts"
 fi
 
 if [ "$openvz" != "" ]; then
