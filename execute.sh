@@ -1,5 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
+. /opt/farm/scripts/functions.keys
 
 PH=0
 VM=0

@@ -1,5 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
+. /opt/farm/scripts/functions.keys
 
 path="/etc/local/.farm"
 type=`/opt/farm/scripts/config/detect-hostname-type.sh $1`

@@ -1,5 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
+. /opt/farm/scripts/functions.keys
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname>"
