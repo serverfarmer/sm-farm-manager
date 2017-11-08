@@ -7,7 +7,7 @@
 #
 #
 # TODO:
-# - use /opt/farm/scripts/config/detect-hostname-type.sh script
+# - use resolve_host function
 # - support for custom ports
 #
 
