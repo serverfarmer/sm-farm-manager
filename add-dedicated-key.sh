@@ -1,7 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
 
-path="/etc/local/.ssh"
 type=`/opt/farm/scripts/config/detect-hostname-type.sh $1`
 
 if [ "$1" = "" ]; then
@@ -27,7 +26,7 @@ else
 	user=root
 fi
 
-newkey="$path/key-$user@$host"
+newkey=`ssh_dedicated_key_storage_filename $host $user`
 admkey=`ssh_management_key_storage_filename $host`
 
 if ! [[ $user =~ ^[a-z0-9]+$ ]]; then
