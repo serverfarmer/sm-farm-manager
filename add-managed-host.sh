@@ -1,7 +1,7 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.net
 . /opt/farm/scripts/functions.custom
-. /opt/farm/scripts/functions.keys
+. /opt/farm/ext/keys/functions
 
 path="/etc/local/.farm"
 

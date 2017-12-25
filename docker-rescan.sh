@@ -1,6 +1,6 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.custom
-. /opt/farm/scripts/functions.keys
+. /opt/farm/ext/keys/functions
 # Search registered servers for installed Docker engine (not
 # necessarily running containers at the time of the scan).
 

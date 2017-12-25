@@ -1,7 +1,7 @@
 #!/bin/bash
 . /opt/farm/scripts/functions.net
 . /opt/farm/scripts/functions.custom
-. /opt/farm/scripts/functions.keys
+. /opt/farm/ext/keys/functions
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]> [username] [key-passphrase]"
