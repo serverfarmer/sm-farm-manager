@@ -8,11 +8,16 @@
 scan_loop() {
 	for server in `cat /etc/local/.farm/$1 |grep -v ^#`; do
 
-		if [ -z "${server##*:*}" ]; then
-			host="${server%:*}"
-			port="${server##*:}"
-		else
-			host=$server
+		if [[ $server =~ ^[a-z0-9.-]+$ ]]; then
+			server="$server::"
+		elif [[ $server =~ ^[a-z0-9.-]+[:][0-9]+$ ]]; then
+			server="$server:"
+		fi
+
+		host=$(echo $server |cut -d: -f1)
+		port=$(echo $server |cut -d: -f2)
+
+		if [ "$port" = "" ]; then
 			port=22
 		fi
 

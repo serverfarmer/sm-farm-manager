@@ -13,7 +13,7 @@ for db in $files; do
 	chmod 0600 $db
 done
 
-mkdir -p /srv/imap /srv/rsync
+mkdir -p /etc/local/hooks /srv/imap /srv/rsync
 
 ln -sf /opt/farm/ext/farm-manager/add-dedicated-key.sh /usr/local/bin/add-dedicated-key
 ln -sf /opt/farm/ext/farm-manager/add-managed-host.sh /usr/local/bin/add-managed-host

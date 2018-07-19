@@ -26,11 +26,10 @@ elif ! [[ $2 =~ ^[a-z0-9.-]+[.][a-z0-9]+$ ]]; then
 elif [ "`getent hosts $1`" = "" ] && [ "`getent hosts $2`" = "" ]; then
 	echo "error: both hostnames not found"
 	exit 1
-elif [ "`cat $path/*.hosts |grep \"^$1$\"`" = "" ]; then
+elif ! grep -q "^$1:" $path/*.hosts && ! grep -q "^$1$" $path/*.hosts; then
 	echo "error: host $1 not in farm"
 	exit 1
 fi
-
 
 for dbfile in `grep -l $1 $path/*.hosts`; do
 	sed -i -e "s/$1/$2/" $dbfile

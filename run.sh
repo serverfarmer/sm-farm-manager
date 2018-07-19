@@ -32,12 +32,22 @@ if [ "$server" = "" ]; then
 	server=$orig
 fi
 
-if [ -z "${server##*:*}" ]; then
-	host="${server%:*}"
-	port="${server##*:}"
-else
-	host=$server
+if [[ $server =~ ^[a-z0-9.-]+$ ]]; then
+	server="$server::"
+elif [[ $server =~ ^[a-z0-9.-]+[:][0-9]+$ ]]; then
+	server="$server:"
+fi
+
+host=$(echo $server |cut -d: -f1)
+port=$(echo $server |cut -d: -f2)
+tag=$(echo $server |cut -d: -f3)
+
+if [ "$port" = "" ]; then
 	port=22
+fi
+
+if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
+	/etc/local/hooks/ssh-accounting.sh start $tag
 fi
 
 sshkey="`ssh_management_key_storage_filename $host`"
@@ -48,4 +58,8 @@ ssh -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
 if [[ $? = 0 ]]; then
 	scp -i $sshkey -P $port $script root@$host:$remote
 	ssh -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
+fi
+
+if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
+	/etc/local/hooks/ssh-accounting.sh stop $tag
 fi

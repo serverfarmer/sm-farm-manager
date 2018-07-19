@@ -22,7 +22,7 @@ else
 	port=22
 fi
 
-if [ "`cat $path/*.hosts |grep \"^$host$\"`" != "" ]; then
+if grep -q "^$host:" $path/*.hosts || grep -q "^$host$" $path/*.hosts; then
 	echo "error: host $host already added"
 	exit 1
 fi

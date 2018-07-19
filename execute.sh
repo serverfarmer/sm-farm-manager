@@ -1,6 +1,4 @@
-#!/bin/bash
-. /opt/farm/scripts/functions.custom
-. /opt/farm/ext/keys/functions
+#!/bin/sh
 
 PH=0
 VM=0
@@ -43,19 +41,7 @@ fi
 
 connect_loop() {
 	for server in `cat /etc/local/.farm/$2 |grep -v ^#`; do
-
-		if [ -z "${server##*:*}" ]; then
-			host="${server%:*}"
-			port="${server##*:}"
-		else
-			host=$server
-			port=22
-		fi
-
-		sshkey="`ssh_management_key_storage_filename $host`"
-		echo
-		echo "####### executing \"$1\" on $3 $server"
-		ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host "$1"
+		/opt/farm/ext/farm-manager/execute-do.sh ssh $server "$1" "$3"
 	done
 }
 
@@ -68,46 +54,13 @@ if [ $LXC = 1 ]; then connect_loop "$command" lxc.hosts "LXC container"; fi
 
 if [ $VZ = 1 ]; then
 	for server in `cat /etc/local/.farm/openvz.hosts |grep -v ^#`; do
-
-		if [ -z "${server##*:*}" ]; then
-			host="${server%:*}"
-			port="${server##*:}"
-		else
-			host=$server
-			port=22
-		fi
-
-		sshkey="`ssh_management_key_storage_filename $host`"
-		containers="`ssh -i $sshkey -p $port root@$host \"/usr/sbin/vzlist -Ho ctid\"`"
-
-		for ID in $containers; do
-			cthost="`ssh -i $sshkey -p $port root@$host \"/usr/sbin/vzlist -Ho hostname $ID\"`"
-			echo
-			echo "####### executing \"$command\" on container $ID [$cthost] at server $server"
-			ssh -t -i $sshkey -p $port root@$host "/usr/sbin/vzctl exec $ID \"TERM=vt100 $command\""
-		done
+		/opt/farm/ext/farm-manager/execute-do.sh openvz $server "$command" ""
 	done
 fi
 
 if [ $DCK = 1 ]; then
 	for server in `cat /etc/local/.farm/docker.hosts |grep -v ^#`; do
-
-		if [ -z "${server##*:*}" ]; then
-			host="${server%:*}"
-			port="${server##*:}"
-		else
-			host=$server
-			port=22
-		fi
-
-		sshkey="`ssh_management_key_storage_filename $host`"
-		containers="`ssh -i $sshkey -p $port root@$host \"docker ps -q\"`"
-
-		for ID in $containers; do
-			echo
-			echo "####### executing \"$command\" on container $ID at server $server"
-			ssh -t -i $sshkey -p $port root@$host "docker exec $ID $command"
-		done
+		/opt/farm/ext/farm-manager/execute-do.sh docker $server "$command" ""
 	done
 fi
 
