@@ -40,28 +40,18 @@ fi
 
 
 connect_loop() {
-	for server in `cat /etc/local/.farm/$2 |grep -v ^#`; do
-		/opt/farm/ext/farm-manager/execute-do.sh ssh $server "$1" "$3"
+	for server in `cat /etc/local/.farm/$3 |grep -v ^#`; do
+		/opt/farm/ext/farm-manager/execute-do.sh $2 $server "$1" "$4"
 	done
 }
 
-if [ $CL = 1 ]; then connect_loop "$command" cloud.hosts "cloud instance"; fi
-if [ $WKS = 1 ]; then connect_loop "$command" workstation.hosts "workstation"; fi
-if [ $PRB = 1 ]; then connect_loop "$command" problematic.hosts "problematic server"; fi
-if [ $PH = 1 ]; then connect_loop "$command" physical.hosts "physical server"; fi
-if [ $VM = 1 ]; then connect_loop "$command" virtual.hosts "virtual server"; fi
-if [ $LXC = 1 ]; then connect_loop "$command" lxc.hosts "LXC container"; fi
-
-if [ $VZ = 1 ]; then
-	for server in `cat /etc/local/.farm/openvz.hosts |grep -v ^#`; do
-		/opt/farm/ext/farm-manager/execute-do.sh openvz $server "$command" ""
-	done
-fi
-
-if [ $DCK = 1 ]; then
-	for server in `cat /etc/local/.farm/docker.hosts |grep -v ^#`; do
-		/opt/farm/ext/farm-manager/execute-do.sh docker $server "$command" ""
-	done
-fi
+if [ $CL  = 1 ]; then connect_loop "$command" ssh cloud.hosts "cloud instance"; fi
+if [ $WKS = 1 ]; then connect_loop "$command" ssh workstation.hosts "workstation"; fi
+if [ $PRB = 1 ]; then connect_loop "$command" ssh problematic.hosts "problematic server"; fi
+if [ $PH  = 1 ]; then connect_loop "$command" ssh physical.hosts "physical server"; fi
+if [ $VM  = 1 ]; then connect_loop "$command" ssh virtual.hosts "virtual server"; fi
+if [ $LXC = 1 ]; then connect_loop "$command" ssh lxc.hosts "LXC container"; fi
+if [ $VZ  = 1 ]; then connect_loop "$command" openvz openvz.hosts ""; fi
+if [ $DCK = 1 ]; then connect_loop "$command" docker docker.hosts ""; fi
 
 if [ $XEN = 1 ]; then echo "skipping Xen containers; not implemented yet"; fi
