@@ -1,7 +1,5 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
 . /opt/farm/ext/net-utils/functions
-. /opt/farm/ext/keys/functions
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname[:port]> [username] [key-passphrase]"
@@ -26,8 +24,8 @@ else
 	user=root
 fi
 
-newkey=`ssh_dedicated_key_storage_filename $host $user`
-admkey=`ssh_management_key_storage_filename $host`
+newkey=`/opt/farm/ext/keys/get-ssh-dedicated-key.sh $host $user`
+admkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 
 if ! [[ $user =~ ^[a-z0-9]+$ ]]; then
 	echo "error: parameter $2 not conforming username format"

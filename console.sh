@@ -1,6 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
-. /opt/farm/ext/keys/functions
 
 if [ "$1" = "" ]; then
 	echo "usage: $0 <hostname>"
@@ -45,7 +43,7 @@ if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag
 fi
 
-sshkey="`ssh_management_key_storage_filename $host`"
+sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then

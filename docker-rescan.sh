@@ -1,6 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
-. /opt/farm/ext/keys/functions
 # Search registered servers for installed Docker engine (not
 # necessarily running containers at the time of the scan).
 
@@ -21,7 +19,7 @@ scan_loop() {
 			port=22
 		fi
 
-		sshkey="`ssh_management_key_storage_filename $host`"
+		sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 		result="`ssh -q -t -i $sshkey -p $port -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$host \"which docker 2>/dev/null\"`"
 
 		if [ "$result" != "" ]; then

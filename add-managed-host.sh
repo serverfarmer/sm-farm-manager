@@ -1,7 +1,5 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
 . /opt/farm/ext/net-utils/functions
-. /opt/farm/ext/keys/functions
 
 path="/etc/local/.farm"
 
@@ -27,7 +25,7 @@ if grep -q "^$host:" $path/*.hosts || grep -q "^$host$" $path/*.hosts; then
 	exit 1
 fi
 
-sshkey=`ssh_management_key_storage_filename $host`
+sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 ssh -i $sshkey -p $port -o StrictHostKeyChecking=no -o PasswordAuthentication=no root@$host uptime >/dev/null 2>/dev/null
 
 if [[ $? != 0 ]]; then

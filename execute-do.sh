@@ -1,6 +1,4 @@
 #!/bin/bash
-. /opt/farm/scripts/functions.custom
-. /opt/farm/ext/keys/functions
 
 exec_ssh() {
 	host=$1
@@ -78,7 +76,7 @@ if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag
 fi
 
-sshkey="`ssh_management_key_storage_filename $host`"
+sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 exec_$mode $host $port $sshkey "$command" "$comment"
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
