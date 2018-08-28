@@ -1,19 +1,14 @@
 #!/bin/bash
 
-if [ "$2" = "" ]; then
-	echo "usage: $0 <hostname> <script> [argument] [...]"
-	exit 1
-elif [ ! -f $2 ]; then
-	echo "error: file $2 not found"
+if [ "$3" = "" ]; then
+	echo "usage: $0 <mode> <server> <command> [comment]"
 	exit 1
 fi
 
-query=$1
-script="`realpath $2`"
-shift
-shift
-
-server=`/opt/farm/ext/farm-manager/internal/lookup-server.sh $query`
+mode=$1
+server=$2
+command=$3
+comment=$4
 
 if [[ $server =~ ^[a-z0-9.-]+$ ]]; then
 	server="$server::"
@@ -34,14 +29,7 @@ if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 fi
 
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
-remote="`dirname $script`"
-
-ssh -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
-
-if [[ $? = 0 ]]; then
-	scp -i $sshkey -P $port $script root@$host:$remote
-	ssh -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
-fi
+/opt/farm/ext/farm-manager/internal/execute-$mode.sh $host $port $sshkey "$command" "$comment"
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh stop $tag
