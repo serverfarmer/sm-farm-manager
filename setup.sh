@@ -13,8 +13,6 @@ $path/docker.hosts
 $path/openvz.hosts
 $path/lxc.hosts
 $path/cloud.hosts
-$path/cisco.hosts
-$path/mikrotik.hosts
 "
 
 mkdir -p $path

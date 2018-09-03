@@ -52,13 +52,11 @@ However, `execute.sh` script allows executing commands inside these containers -
 
 ### `*.hosts` files
 
-This extensions maintains a "database" consisting of a few `*.hosts` files located in `/etc/local/.farm` directory. These files can be divided into 3 groups:
+This extensions maintains a "database" consisting of a few `*.hosts` files located in `/etc/local/.farm` directory. These files can be divided into 2 groups:
 
 1. `workstation.hosts`, `physical.hosts`, `virtual.hosts`, `cloud.hosts`, `lxc.hosts`, `problematic.hosts` - lists of active hosts, which can be directly managed.
 
 2. `docker.hosts`, `openvz.hosts` - Docker/OpenVZ hosts, on which `execute.sh` should execute commands in `-dck` or `-vz` modes (these hosts must be also included in the first group, as managed hosts).
-
-3. `cisco.hosts`, `mikrotik.hosts` - Cisco/MikroTik network devices managed by Server Farmer.
 
 ### `*.hosts` file format
 
