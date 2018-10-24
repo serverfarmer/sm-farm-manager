@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ "$2" = "" ]; then
 	echo "usage: $0 <hostname> <script> [argument] [...]"
@@ -15,19 +15,9 @@ shift
 
 server=`/opt/farm/ext/farm-manager/internal/lookup-server.sh $query`
 
-if [[ $server =~ ^[a-z0-9.-]+$ ]]; then
-	server="$server::"
-elif [[ $server =~ ^[a-z0-9.-]+[:][0-9]+$ ]]; then
-	server="$server:"
-fi
-
-host=$(echo $server |cut -d: -f1)
-port=$(echo $server |cut -d: -f2)
-tag=$(echo $server |cut -d: -f3)
-
-if [ "$port" = "" ]; then
-	port=22
-fi
+host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
+port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
+tag=`/opt/farm/ext/farm-manager/internal/decode.sh tag $server`
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag

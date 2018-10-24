@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ "$3" = "" ]; then
 	echo "usage: $0 <mode> <server> <command> [comment]"
@@ -10,19 +10,9 @@ server=$2
 command=$3
 comment=$4
 
-if [[ $server =~ ^[a-z0-9.-]+$ ]]; then
-	server="$server::"
-elif [[ $server =~ ^[a-z0-9.-]+[:][0-9]+$ ]]; then
-	server="$server:"
-fi
-
-host=$(echo $server |cut -d: -f1)
-port=$(echo $server |cut -d: -f2)
-tag=$(echo $server |cut -d: -f3)
-
-if [ "$port" = "" ]; then
-	port=22
-fi
+host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
+port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
+tag=`/opt/farm/ext/farm-manager/internal/decode.sh tag $server`
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag
