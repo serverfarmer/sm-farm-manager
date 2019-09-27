@@ -10,8 +10,6 @@
 
 `add-dedicated-key.sh` - generates new ssh key and uploads it to managed host
 
-`rename-host.sh` - renames existing host in `*.backup` files, and also renames associated ssh keys
-
 `docker-rescan.sh` - scans the whole farm for hosts with installed Docker
 
 ### command execution scripts
