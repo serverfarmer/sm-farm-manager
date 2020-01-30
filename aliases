@@ -1,0 +1,6 @@
+add-dedicated-key.sh:add-dedicated-key
+add-managed-host.sh:add-managed-host
+execute.sh:sf-execute
+console.sh:sf-console
+console.sh:admin
+run.sh:sf-run
