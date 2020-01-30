@@ -10,7 +10,7 @@ scan_loop() {
 		port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
 
 		sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
-		result="`ssh -q -t -i $sshkey -p $port -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$host \"which docker 2>/dev/null\"`"
+		result="`$SSH -q -t -i $sshkey -p $port -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$host \"which docker 2>/dev/null\"`"
 
 		if [ "$result" != "" ]; then
 			echo $server
@@ -18,6 +18,8 @@ scan_loop() {
 	done
 }
 
+
+SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
 
 scan_loop physical.hosts
 scan_loop virtual.hosts

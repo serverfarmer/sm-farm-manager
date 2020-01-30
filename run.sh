@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$2" = "" ]; then
 	echo "usage: $0 <hostname> <script> [argument] [...]"
@@ -23,14 +23,21 @@ if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag
 fi
 
+SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
+SCP=/opt/farm/ext/binary-ssh-client/wrapper/scp
+
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 remote="`dirname $script`"
 
-ssh -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
+if [ "$remote" = "." ]; then
+	remote=`pwd`
+fi
+
+$SSH -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
 
 if [[ $? = 0 ]]; then
-	scp -i $sshkey -P $port $script root@$host:$remote
-	ssh -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
+	$SCP -i $sshkey -P $port $script root@$host:$remote
+	$SSH -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
 fi
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then

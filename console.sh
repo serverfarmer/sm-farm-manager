@@ -8,6 +8,8 @@ fi
 query=$1
 shift
 
+# TODO: if $query contains login@ part, extract it and use below instead of fixed root user
+
 server=`/opt/farm/ext/farm-manager/internal/lookup-server.sh $query`
 
 host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
@@ -19,7 +21,8 @@ if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 fi
 
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
-ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
+SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
+$SSH -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh stop $tag
