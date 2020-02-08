@@ -61,12 +61,18 @@ This extensions maintains a "database" consisting of a few `*.hosts` files locat
 `*.hosts` files are simply text files with list of hostnames, possibly including port numbers and project/customer tags (see below), one per line:
 
 ```
-hostname1.internal:22:ourcompany
+hostname1.internal:22:ourcompany:timeout
 hostname2.internal::ourcompany
 otherserver.domain.com:3322:customer1
 ```
 
 Empty lines and lines starting with `#` character are ignored, so you can use them to better organize the contents, add comments etc.
+
+Fields:
+- hostname
+- port (optional, default 22)
+- tag (eg. client name)
+- timeout in seconds (optional, default 60, used only by `execute.sh`, ignored for Docker/OpenVZ)
 
 ### project/customer tags and hook script
 
