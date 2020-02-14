@@ -23,10 +23,10 @@
 - `-vm` - virtual servers
 - `-cl` - cloud instances
 - `-lxc` - LXC containers
+- `-dck` - Docker containers
+- `-ct` - other containers
 - `-wks` - workstations
 - `-prb` - problematic hosts
-- `-dck` - Docker containers
-- `-vz` - OpenVZ containers
 
 ### virtual vs cloud servers
 
@@ -42,9 +42,9 @@ You can move such hosts to "problematic" group and avoid executing normal daily 
 
 Server Farmer was primarily written to work on "classic" physical and virtual Linux instances. Now it also fully supports LXC containers, with only a few differences in backup scheme (see `sf-backup` repository documentation for details).
 
-### Docker and OpenVZ support
+### Docker support
 
-Both Docker and OpenVZ are supported in quite different way than LXC. Docker and OpenVZ are treated as "passive" containers, which means that installing Server Farmer inside such containers is not supported and in most cases doesn't have any practical sense.
+Docker is supported in quite different way than LXC. Docker containers are treated as "passive" containers, which means that installing Server Farmer inside such containers is not supported and in most cases doesn't have any practical sense.
 
 However, `execute.sh` script allows executing commands inside these containers - directly from farm manager, through parent host of each such container.
 
@@ -52,9 +52,9 @@ However, `execute.sh` script allows executing commands inside these containers -
 
 This extensions maintains a "database" consisting of a few `*.hosts` files located in `/etc/local/.farm` directory. These files can be divided into 2 groups:
 
-1. `workstation.hosts`, `physical.hosts`, `virtual.hosts`, `cloud.hosts`, `lxc.hosts`, `problematic.hosts` - lists of active hosts, which can be directly managed.
+1. `workstation.hosts`, `physical.hosts`, `virtual.hosts`, `cloud.hosts`, `container.hosts`, `lxc.hosts`, `problematic.hosts` - lists of active hosts, which can be directly managed.
 
-2. `docker.hosts`, `openvz.hosts` - Docker/OpenVZ hosts, on which `execute.sh` should execute commands in `-dck` or `-vz` modes (these hosts must be also included in the first group, as managed hosts).
+2. `docker.hosts` - Docker hosts, on which `execute.sh` should execute commands in `-dck` mode (these hosts must be also included in the first group, as managed hosts).
 
 ### `*.hosts` file format
 
@@ -72,7 +72,7 @@ Fields:
 - hostname
 - port (optional, default 22)
 - tag (eg. client name)
-- timeout in seconds (optional, default 60, used only by `execute.sh`, ignored for Docker/OpenVZ)
+- timeout in seconds (optional, default 60, used only by `execute.sh`, ignored for Docker)
 
 ### project/customer tags and hook script
 

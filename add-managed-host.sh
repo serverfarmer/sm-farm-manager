@@ -46,14 +46,12 @@ elif [ $hwtype = "physical" ]; then
 	echo $server >>"$path/physical.hosts"
 elif [ $hwtype = "lxc" ]; then
 	echo $server >>"$path/lxc.hosts"
+elif [ "$openvz" != "" ]; then
+	echo $server >>"$path/container.hosts"
 elif [ "$cloud" != "" ]; then
 	echo $server >>"$path/cloud.hosts"
 elif [ $hwtype = "guest" ]; then
 	echo $server >>"$path/virtual.hosts"
-fi
-
-if [ "$openvz" != "" ]; then
-	echo $server >>"$path/openvz.hosts"
 fi
 
 if [ "$docker" != "" ]; then
@@ -62,7 +60,7 @@ fi
 
 /opt/farm/ext/farm-manager/add-dedicated-key.sh $server root
 
-if [ $hwtype != "container" ] && [ $hwtype != "lxc" ]; then
+if [ $hwtype != "lxc" ]; then
 	/opt/farm/ext/farm-manager/add-dedicated-key.sh $server backup
 
 	if [ -x /opt/farm/ext/backup-collector/add-backup-host.sh ]; then
