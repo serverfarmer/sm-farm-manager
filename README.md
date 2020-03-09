@@ -6,10 +6,6 @@
 
 ### management scripts
 
-`add-managed-host.sh` - the most important script, used to add new hosts to the farm; it tries to connect to the added server for a few times using ssh, then creates dedicated ssh keys for `root` and `backup` users, and executes `add-backup-host.sh` script from `sf-backup-collector` extension
-
-`add-dedicated-key.sh` - generates new ssh key and uploads it to managed host
-
 `docker-rescan.sh` - scans the whole farm for hosts with installed Docker
 
 ### command execution scripts
