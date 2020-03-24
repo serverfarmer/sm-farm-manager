@@ -2,7 +2,7 @@
 
 ### Overview
 
-`sf-farm-manager` is one of the most important Server Farmer extensions, providing actual farm management scripts. Some scripts rely on other extension, mostly `sf-backup-collector` and `sf-keys`.
+`sm-farm-manager` is one of the most important Server Farmer management extensions, providing actual farm management scripts. Some scripts rely on other extension, mostly `sm-backup-collector` and `sf-keys`.
 
 ### management scripts
 

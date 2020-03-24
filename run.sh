@@ -13,11 +13,11 @@ script="`realpath $2`"
 shift
 shift
 
-server=`/opt/farm/ext/farm-manager/internal/lookup-server.sh $query`
+server=`/opt/farm/mgr/farm-manager/internal/lookup-server.sh $query`
 
-host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
-port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
-tag=`/opt/farm/ext/farm-manager/internal/decode.sh tag $server`
+host=`/opt/farm/mgr/farm-manager/internal/decode.sh host $server`
+port=`/opt/farm/mgr/farm-manager/internal/decode.sh port $server`
+tag=`/opt/farm/mgr/farm-manager/internal/decode.sh tag $server`
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag

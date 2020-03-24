@@ -10,17 +10,17 @@ server=$2
 command=$3
 comment=$4
 
-host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
-port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
-tag=`/opt/farm/ext/farm-manager/internal/decode.sh tag $server`
-timeout=`/opt/farm/ext/farm-manager/internal/decode.sh timeout $server`
+host=`/opt/farm/mgr/farm-manager/internal/decode.sh host $server`
+port=`/opt/farm/mgr/farm-manager/internal/decode.sh port $server`
+tag=`/opt/farm/mgr/farm-manager/internal/decode.sh tag $server`
+timeout=`/opt/farm/mgr/farm-manager/internal/decode.sh timeout $server`
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh start $tag
 fi
 
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
-/opt/farm/ext/farm-manager/internal/execute-$mode.sh $host $port $sshkey $timeout "$command" "$comment"
+/opt/farm/mgr/farm-manager/internal/execute-$mode.sh $host $port $sshkey $timeout "$command" "$comment"
 
 if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	/etc/local/hooks/ssh-accounting.sh stop $tag

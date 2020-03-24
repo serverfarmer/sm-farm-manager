@@ -6,8 +6,8 @@
 scan_loop() {
 	for server in `cat /etc/local/.farm/$1 |grep -v ^#`; do
 
-		host=`/opt/farm/ext/farm-manager/internal/decode.sh host $server`
-		port=`/opt/farm/ext/farm-manager/internal/decode.sh port $server`
+		host=`/opt/farm/mgr/farm-manager/internal/decode.sh host $server`
+		port=`/opt/farm/mgr/farm-manager/internal/decode.sh port $server`
 
 		sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 		result="`$SSH -q -t -i $sshkey -p $port -o StrictHostKeyChecking=no -o ConnectTimeout=10 root@$host \"which docker 2>/dev/null\"`"
