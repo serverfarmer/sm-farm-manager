@@ -2,25 +2,14 @@
 
 /opt/farm/scripts/setup/extension.sh sm-farm-register
 
-path="/etc/local/.farm"
-files="
-$path/backup.hosts
-$path/workstation.hosts
-$path/problematic.hosts
-$path/container.hosts
-$path/physical.hosts
-$path/virtual.hosts
-$path/docker.hosts
-$path/lxc.hosts
-$path/cloud.hosts
-"
+files="backup workstation problematic container physical virtual docker lxc cloud"
 
-mkdir -p $path
-chmod 0700 $path
+mkdir -p   ~/.farm
+chmod 0700 ~/.farm
 
 for db in $files; do
-	touch $db
-	chmod 0600 $db
+	touch      ~/.farm/$db.hosts
+	chmod 0600 ~/.farm/$db.hosts
 done
 
 mkdir -p /etc/local/hooks /srv/imap /srv/rsync

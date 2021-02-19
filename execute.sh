@@ -40,7 +40,7 @@ fi
 
 
 connect_loop() {
-	for server in `cat /etc/local/.farm/$3 |grep -v ^#`; do
+	for server in `cat ~/.farm/$3 |grep -v ^#`; do
 		/opt/farm/mgr/farm-manager/internal/execute-proxy.sh $2 $server "$1" "$4"
 	done
 }

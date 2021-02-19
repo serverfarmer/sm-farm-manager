@@ -4,7 +4,7 @@
 
 
 scan_loop() {
-	for server in `cat /etc/local/.farm/$1 |grep -v ^#`; do
+	for server in `cat ~/.farm/$1 |grep -v ^#`; do
 
 		host=`/opt/farm/mgr/farm-manager/internal/decode.sh host $server`
 		port=`/opt/farm/mgr/farm-manager/internal/decode.sh port $server`

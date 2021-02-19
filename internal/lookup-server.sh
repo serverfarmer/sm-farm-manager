@@ -5,7 +5,7 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-path="/etc/local/.farm"
+path=~/.farm
 orig=$1
 query=$1
 
