@@ -46,7 +46,7 @@ However, `execute.sh` script allows executing commands inside these containers -
 
 ### `*.hosts` files
 
-This extensions maintains a "database" consisting of a few `*.hosts` files located in `~/.farm` directory. These files can be divided into 2 groups:
+This extensions maintains a "database" consisting of a few `*.hosts` files located in `~/.serverfarmer/inventory` directory. These files can be divided into 2 groups:
 
 1. `workstation.hosts`, `physical.hosts`, `virtual.hosts`, `cloud.hosts`, `container.hosts`, `lxc.hosts`, `problematic.hosts` - lists of active hosts, which can be directly managed.
 

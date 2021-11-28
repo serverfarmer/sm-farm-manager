@@ -5,7 +5,7 @@ if [ "$1" = "" ]; then
 	exit 1
 fi
 
-path=~/.farm
+path=~/.serverfarmer/inventory
 orig=$1
 query=$1
 

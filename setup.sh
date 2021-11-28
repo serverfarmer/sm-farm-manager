@@ -4,12 +4,12 @@
 
 files="backup workstation problematic container physical virtual docker lxc cloud"
 
-mkdir -p   ~/.farm
-chmod 0700 ~/.farm
+mkdir -p   ~/.serverfarmer/inventory
+chmod 0700 ~/.serverfarmer/inventory
 
 for db in $files; do
-	touch      ~/.farm/$db.hosts
-	chmod 0600 ~/.farm/$db.hosts
+	touch      ~/.serverfarmer/inventory/$db.hosts
+	chmod 0600 ~/.serverfarmer/inventory/$db.hosts
 done
 
 mkdir -p /etc/local/hooks /srv/imap /srv/rsync
