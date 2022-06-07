@@ -21,8 +21,7 @@ if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 fi
 
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
-SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
-$SSH -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
+ssh -t -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host $@
 
 if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	~/.serverfarmer/hooks/ssh-accounting.sh stop $tag

@@ -23,9 +23,6 @@ if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
 	~/.serverfarmer/hooks/ssh-accounting.sh start $tag
 fi
 
-SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
-SCP=/opt/farm/ext/binary-ssh-client/wrapper/scp
-
 sshkey=`/opt/farm/ext/keys/get-ssh-management-key.sh $host`
 remote="`dirname $script`"
 
@@ -33,11 +30,11 @@ if [ "$remote" = "." ]; then
 	remote=`pwd`
 fi
 
-$SSH -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
+ssh -i $sshkey -p $port -o StrictHostKeyChecking=no root@$host mkdir -p $remote
 
 if [[ $? = 0 ]]; then
-	$SCP -i $sshkey -P $port $script root@$host:$remote
-	$SSH -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
+	scp -i $sshkey -P $port $script root@$host:$remote
+	ssh -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
 fi
 
 if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
