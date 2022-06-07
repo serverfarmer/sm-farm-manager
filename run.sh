@@ -19,8 +19,8 @@ host=`/opt/farm/mgr/farm-manager/internal/decode.sh host $server`
 port=`/opt/farm/mgr/farm-manager/internal/decode.sh port $server`
 tag=`/opt/farm/mgr/farm-manager/internal/decode.sh tag $server`
 
-if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
-	/etc/local/hooks/ssh-accounting.sh start $tag
+if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
+	~/.serverfarmer/hooks/ssh-accounting.sh start $tag
 fi
 
 SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
@@ -40,6 +40,6 @@ if [[ $? = 0 ]]; then
 	$SSH -i $sshkey -p $port -t root@$host "sh -c '$script $@'"
 fi
 
-if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
-	/etc/local/hooks/ssh-accounting.sh stop $tag
+if [ -x ~/.serverfarmer/hooks/ssh-accounting.sh ] && [ "$tag" != "" ]; then
+	~/.serverfarmer/hooks/ssh-accounting.sh stop $tag
 fi

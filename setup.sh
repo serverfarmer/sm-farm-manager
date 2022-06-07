@@ -12,4 +12,9 @@ for db in $files; do
 	chmod 0600 ~/.serverfarmer/inventory/$db.hosts
 done
 
-mkdir -p /etc/local/hooks /srv/imap /srv/rsync
+mkdir -p ~/.serverfarmer/hooks /srv/imap /srv/rsync
+
+
+if [ -x /etc/local/hooks/ssh-accounting.sh ] && [ "`whoami`" = "root" ]; then
+	mv -f /etc/local/hooks/ssh-accounting.sh ~/.serverfarmer/hooks
+fi

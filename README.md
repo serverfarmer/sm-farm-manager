@@ -72,8 +72,8 @@ Fields:
 
 ### project/customer tags and hook script
 
-`console.sh`, `run.sh` and `execute.sh` scripts look for `/etc/local/hooks/ssh-accounting.sh` script and execute it if exists, each time you execute command using them: before and after actual command execution.
+`console.sh`, `run.sh` and `execute.sh` scripts look for `~/.serverfarmer/hooks/ssh-accounting.sh` script and execute it if exists, each time you execute command using them: before and after actual command execution.
 
 Hook script doesn't receive the executed command or hostname, instead it only receives `start` or `stop` arguments, and the project/customer tag (`ourcompany` or `customer1` in the above example), on which current command is executed.
 
-Using this `/etc/local/hooks/ssh-accounting.sh` script you can gather some simple statistics: how many commands are executed for each project or customer, on how many servers, how long they last etc.
+Using this `~/.serverfarmer/hooks/ssh-accounting.sh` script you can gather some simple statistics: how many commands are executed for each project or customer, on how many servers, how long they last etc.
