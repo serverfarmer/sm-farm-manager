@@ -19,8 +19,6 @@ scan_loop() {
 }
 
 
-SSH=/opt/farm/ext/binary-ssh-client/wrapper/ssh
-
 scan_loop physical.hosts
 scan_loop virtual.hosts
 scan_loop cloud.hosts
